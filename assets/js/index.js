@@ -6,6 +6,7 @@ $(function () {
 
     // 点击按钮，实现退出功能
     $('#btnLogout').on('click', function () {
+
         // 提示用户是否确认退出
         layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function (index) {
             //do something
@@ -17,6 +18,7 @@ $(function () {
             // 关闭 confirm 询问框
             layer.close(index)
         })
+
     })
 })
 
@@ -25,6 +27,9 @@ function getUserInfo() {
     $.ajax({
         method: 'GET',
         url: '/my/userinfo',
+        headers: {
+            Authorization: localStorage.getItem('token') || ''
+        },
         success: function (res) {
             if (res.status !== 0) {
                 console.log(res)
@@ -53,7 +58,7 @@ function renderAvatar(user) {
     // 1. 获取用户的名称
     var name = user.nickname || user.username
     // 2. 设置欢迎的文本
-    $('#welcome').html('欢迎&nbsp;&nbsp;' + name)
+    $('#welcome').html('欢迎&nbsp;&nbsp;&nbsp;&nbsp;' + name)
     console.log(name)
     // 3. 按需渲染用户的头像
     if (user.user_pic !== null) {
